@@ -1,11 +1,13 @@
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import ru.ncedu.nfetissow.archiver.Archiver;
-import ru.ncedu.nfetissow.archiver.ArchiverApp;
 import ru.ncedu.nfetissow.archiver.ArchiverImpl;
 
 public class ArchiverTest {
+
+    //TODO The practice is to provide one unit test for one test case
+    // + for me this two tests are failing :)
+
     @Test
     public void testDearchiving() {
         Archiver arch = ArchiverImpl.getInstance();
@@ -16,6 +18,7 @@ public class ArchiverTest {
         actual = arch.deArchive("notExisting.zip", "/test/dearchiveResult");
         Assert.assertEquals(actual, "Error");
     }
+
     @Test
     public void testArchiving() {
         Archiver arch = ArchiverImpl.getInstance();

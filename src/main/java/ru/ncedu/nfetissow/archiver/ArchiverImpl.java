@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.Enumeration;
 import java.util.zip.*;
 
+//TODO Class with private constructor should be final
 public class ArchiverImpl implements Archiver {
 
     private static ArchiverImpl instance = null;
@@ -12,6 +13,7 @@ public class ArchiverImpl implements Archiver {
         BUFFER = 2048;
     }
 
+    //TODO 1)this singlton isn't correct http://habrahabr.ru/post/129494/
     public static ArchiverImpl getInstance() {
         if(instance == null) {
             instance = new ArchiverImpl();
@@ -26,6 +28,10 @@ public class ArchiverImpl implements Archiver {
     public int getBuffer() {
         return this.BUFFER;
     }
+
+    //TODO This code is very hard to read!
+    // 1)Avoid short variables like e, etc.
+    // 2)use helper methods to extend your functionality
     @Override
     public String deArchive(String path, String dirWhereTo) {
         try {
@@ -47,7 +53,9 @@ public class ArchiverImpl implements Archiver {
                 FileOutputStream fos;
                 //Create directories for archived file to avoid FileNotFound exception
                 String dir = dirWhereTo;
+                //TODO avoid RepetingLiterals / -appears 8 times
                 if(entry.getName().lastIndexOf("/") != -1) {
+                    //TODO Prefer StringBuilder for concatenating Strings
                     dir += "/" + entry.getName().substring(0, entry.getName().lastIndexOf("/"));
                 }
                 File f = new File(dir);
@@ -65,7 +73,9 @@ public class ArchiverImpl implements Archiver {
                 dest.close();
                 is.close();
             }
+            //TODO Avoid checking general exception This is a bad style
         } catch(Exception e) {
+            //TODO this error isn't user friendly
             return "Error";
         }
         return "Success";
@@ -112,6 +122,7 @@ public class ArchiverImpl implements Archiver {
             }
             out.flush();
             out.close();
+            //TODO Avoid checking general exception This is a bad style
         } catch (Exception e) {
             return "Error";
         }
